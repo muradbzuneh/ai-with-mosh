@@ -8,9 +8,14 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(import.meta.dirname, "./src"),
     },
-  }, 
+    dedupe: ['react', 'react-dom'],
+  },
+  optimizeDeps: {
+    // Force Vite to pre-bundle these together
+    include: ['react', 'react-dom', '@base-ui/react'],
+  },
   server: {
     proxy: {
       '/api':  'http://localhost:3000',
